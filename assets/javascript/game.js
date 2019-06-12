@@ -18,16 +18,19 @@ function renderButtons() {
 };
 
 $("#add-gif").on("click", function(event) {
-    event.preventDefault();
+    event.preventDefault();    
     var gif = $("#gif-input").val().trim();
-    topics.push(gif);
-    renderButtons();
+    if (gif.length > 0) {
+
+      topics.push(gif);
+      renderButtons();
+    }
   });
 
   //   $(".booger").on("click", function(event) {
       
       // event.preventDefault();
-      function displayGifs() {
+function displayGifs() {
         event.preventDefault(); 
           // In this case, the "this" keyword refers to the button that was clicked
           var name = $(this).attr("data-name");
@@ -57,8 +60,9 @@ $("#add-gif").on("click", function(event) {
             var p = $("<p>").text("Rating: " + rating);
             var animateLink = results[i].images.fixed_height.url;
             var stopLink = results[i].images.fixed_height_still.url;
+            var isMoving = "no";
             // Creating an image tag
-            var personImage = $('<img class="still" moveMe="' + animateLink + '" stopMe="' + stopLink + '">');
+            var personImage = $('<img class="still" moveMe="' + animateLink + '" stopMe="' + stopLink + '" animated="' + isMoving +'">');
             
             // Giving the image tag an src attribute of a proprty pulled off the
             // result item
@@ -81,12 +85,29 @@ $("#add-gif").on("click", function(event) {
 function animateGif() {
 var stillLink = $(this).attr("stopMe");
 var moveLink = $(this).attr("moveMe");
-$(this).html(moveLink);
+var isMoving = $(this).attr("animated");
+// If the clicked image's state is still, update its src attribute to what its data-animate value is.
+// Then, set the image's data-state to animate
+// Else set src to the data-still value
+if (isMoving === "no") {
+  $(this).attr("src", moveLink);
+  $(this).attr("animated", "yes");
+  isMoving = "yes";
+} else {
+  $(this).attr("src", stillLink);
+  $(this).attr("animated", "no");
+  isMoving = "no";
+}
 
+
+
+
+
+
+// $(this).html() = moveLink;
+// $('#moveMe={moveLink}').html("dog");
 // var newLink = $('<img class="still" moveMe="' + stillLink + '"> + moveLink');
 console.log("still:" + stillLink);
-
-
 console.log("move:" + moveLink);
 // console.log("new:" + newLink);
 
