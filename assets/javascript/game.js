@@ -48,8 +48,8 @@ function displayGifs() {
         var results = response.data;
         console.log(results);
         // Looping over every result item
+        $("#gifs-appear-here").text("");
         for (var i = 0; i < results.length; i++) {
-            
             // Creating a div for the gif
             var gifDiv = $("<div>");
             
